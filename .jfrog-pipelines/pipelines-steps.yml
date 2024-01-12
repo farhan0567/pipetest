@@ -1,4 +1,14 @@
 valuesFilePath: ./values.yml
+
+resources:
+  - name: src_repo_pipetest                        
+    type: GitRepo
+    configuration:
+      gitProvider: farhan_github 
+      path: farhan0567/pipetest              
+      branches:
+        include: main                    
+
 pipelines:
 - name: far_pipeline
   configuration:
@@ -6,8 +16,31 @@ pipelines:
   steps:
     - name: test_step
       type: Bash
+      configuration:
+        inputResources: 
+          - name: src_repo_pipetest
       execution:
         onStart:
           - echo {{ .Values.isTestPipeline }}
           - echo {"hello world"}
-        
+    - name: docker_build
+      type: DockerBuild
+      configuration:
+        dockerFileLocation: .
+        dockerFileName: Dockerfile
+        dockerImageName: test_docker
+        dockerImageTag: $run_number
+        integrations:
+          - name: hk_artifactory_1
+        inputResources:
+          - name: src_repo_pipetest
+      execution:
+        onStart:
+          - echo "Preparing for work..."
+        onSuccess:
+          - echo "Job well done!"
+        onFailure:
+          - echo "uh oh, something went wrong"
+        onComplete: #always
+          - echo "Cleaning up some stuff"
+      
