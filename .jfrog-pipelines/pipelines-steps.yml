@@ -22,10 +22,12 @@ pipelines:
       execution:
         onStart:
           - ls -l
-          - cd res_src_repo_pipetest_resourcePath
-          - ls -l
           - echo {{ .Values.isTestPipeline }}
           - echo {"hello world"}
+        onComplete:
+          - ls -l
+          - pushd res_src_repo_pipetest_resourcePath
+          - ls -l
     - name: docker_build
       type: DockerBuild
       configuration:
@@ -49,4 +51,7 @@ pipelines:
           - echo "uh oh, something went wrong"
         onComplete: #always
           - echo "Cleaning up some stuff"
+          - ls -l
+          - pushd res_src_repo_pipetest_resourcePath
+          - ls -l
       
