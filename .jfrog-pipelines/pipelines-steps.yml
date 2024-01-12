@@ -41,9 +41,6 @@ pipelines:
           - name: src_repo_pipetest
       execution:
         onStart:
-          - ls -l 
-          - cd res_src_repo_pipetest_resourcePath
-          - ls -l
           - echo "Preparing for work..."
         onSuccess:
           - echo "Job well done!"
