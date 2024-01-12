@@ -21,7 +21,9 @@ pipelines:
           - name: src_repo_pipetest
       execution:
         onStart:
-          - ls
+          - ls -l
+          - cd res_src_repo_pipetest_resourcePath
+          - ls -l
           - echo {{ .Values.isTestPipeline }}
           - echo {"hello world"}
     - name: docker_build
@@ -37,7 +39,9 @@ pipelines:
           - name: src_repo_pipetest
       execution:
         onStart:
-          - ls
+          - ls -l 
+          - cd res_src_repo_pipetest_resourcePath
+          - ls -l
           - echo "Preparing for work..."
         onSuccess:
           - echo "Job well done!"
