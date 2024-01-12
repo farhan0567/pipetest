@@ -26,7 +26,7 @@ pipelines:
           - echo {"hello world"}
         onComplete:
           - ls -l
-          - pushd res_src_repo_pipetest_resourcePath
+          - pushd $res_src_repo_pipetest_resourcePath
           - ls -l
     - name: docker_build
       type: DockerBuild
@@ -52,6 +52,6 @@ pipelines:
         onComplete: #always
           - echo "Cleaning up some stuff"
           - ls -l
-          - pushd res_src_repo_pipetest_resourcePath
+          - cd $res_src_repo_pipetest_resourcePath
           - ls -l
       
