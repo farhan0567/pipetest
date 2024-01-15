@@ -23,7 +23,7 @@ pipelines:
         onStart:
           - ls -l
           - echo {{ .Values.isTestPipeline }}
-          - echo {"hello world"}
+          - echo {"hello world.."}
         onComplete:
           - ls -l
           - pushd $res_src_repo_pipetest_resourcePath
